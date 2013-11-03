@@ -1,0 +1,20 @@
+PROGRAM binopscomplex;
+VAR a: INTEGER;
+VAR b: INTEGER;
+VAR c: INTEGER;
+VAR d: INTEGER;
+VAR e: INTEGER;
+BEGIN
+a:=2;
+b:=5;
+c:=10;
+d:=-10;
+e:=-1;
+
+WRITE c/10+b-d*e*(c+12);
+WRITE (a*((c+b)-(a*a)))*(-1);
+WRITE -d*-e*c*b*a;
+WRITE a+b+c+d+e;
+WRITE a*b/(-c+d)+e;
+
+END.

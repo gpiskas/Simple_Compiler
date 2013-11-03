@@ -1,0 +1,28 @@
+PROGRAM while;
+VAR i: INTEGER;
+VAR j: INTEGER;
+VAR counter: INTEGER;
+BEGIN
+i:=0;
+WHILE i<10 DO
+WRITE i;
+i:=i+1;
+ENDDO;
+WRITE 0101010101;
+WRITE i;
+
+i:=0;
+j:=0;
+WHILE i<10 DO
+
+WHILE j<10 DO
+counter:=counter+1;
+j:=j+1;
+ENDDO;
+
+j:=0;
+i:=i+1;
+ENDDO;
+WRITE 0101010101;
+WRITE counter;
+END.

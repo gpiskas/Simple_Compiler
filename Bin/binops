@@ -1,0 +1,47 @@
+PROGRAM binops;
+VAR a: INTEGER;
+VAR b: INTEGER;
+VAR c: INTEGER;
+VAR d: INTEGER;
+VAR e: INTEGER;
+VAR f: INTEGER;
+VAR g: INTEGER;
+VAR h: INTEGER;
+VAR i: INTEGER;
+VAR j: INTEGER;
+VAR k: INTEGER;
+VAR l: INTEGER;
+VAR m: INTEGER;
+VAR n: INTEGER;
+VAR o: INTEGER;
+VAR p: INTEGER;
+VAR tmp: INTEGER;
+BEGIN
+i:=2;
+j:=5;
+k:=10;
+l:=10;
+m:=5;
+
+tmp:=i+j;
+WRITE tmp;
+
+tmp:=i-j;
+WRITE tmp;
+
+tmp:=-i-j;
+WRITE tmp;
+
+tmp:=k/j;
+WRITE tmp;
+
+tmp:=k*j;
+WRITE tmp;
+
+WRITE i<10;
+WRITE i<=i;
+WRITE k>i;
+WRITE k<=l;
+WRITE 123=123;
+WRITE k!=j;
+END.

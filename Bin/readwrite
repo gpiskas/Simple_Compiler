@@ -1,0 +1,9 @@
+PROGRAM readwrite;
+VAR i: INTEGER;
+VAR j: INTEGER;
+BEGIN
+READ i;
+READ j;
+WRITE i;
+WRITE j;
+END.

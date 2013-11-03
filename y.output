@@ -1,0 +1,910 @@
+   0  $accept : program $end
+
+   1  program : PROGRAM ID SCOL decl_list block PRD
+
+   2  decl_list :
+   3            | decl_list declaration SCOL
+
+   4  declaration : VAR ID COL INTEGER
+
+   5  block : BEGINPROG stat_seq ENDPROG
+
+   6  stat_seq :
+   7           | stat_seq statement SCOL
+
+   8  statement : ID ASGN expression
+   9            | WRITE expression
+  10            | READ ID
+  11            | IF expression THEN stat_seq ELSE stat_seq ENDIF
+  12            | WHILE expression DO stat_seq ENDDO
+
+  13  expression : expression PLUS expression
+  14             | expression MINUS expression
+  15             | expression TIMES expression
+  16             | expression DIV expression
+  17             | expression LT expression
+  18             | expression LE expression
+  19             | expression EQ expression
+  20             | expression GE expression
+  21             | expression GT expression
+  22             | expression NE expression
+  23             | LPAREN expression RPAREN
+  24             | MINUS expression
+  25             | INT_LITERAL
+  26             | ID
+
+state 0
+	$accept : . program $end  (0)
+
+	PROGRAM  shift 1
+	.  error
+
+	program  goto 2
+
+
+state 1
+	program : PROGRAM . ID SCOL decl_list block PRD  (1)
+
+	ID  shift 3
+	.  error
+
+
+state 2
+	$accept : program . $end  (0)
+
+	$end  accept
+
+
+state 3
+	program : PROGRAM ID . SCOL decl_list block PRD  (1)
+
+	SCOL  shift 4
+	.  error
+
+
+state 4
+	program : PROGRAM ID SCOL . decl_list block PRD  (1)
+	decl_list : .  (2)
+
+	.  reduce 2
+
+	decl_list  goto 5
+
+
+state 5
+	program : PROGRAM ID SCOL decl_list . block PRD  (1)
+	decl_list : decl_list . declaration SCOL  (3)
+
+	VAR  shift 6
+	BEGINPROG  shift 7
+	.  error
+
+	block  goto 8
+	declaration  goto 9
+
+
+state 6
+	declaration : VAR . ID COL INTEGER  (4)
+
+	ID  shift 10
+	.  error
+
+
+state 7
+	block : BEGINPROG . stat_seq ENDPROG  (5)
+	stat_seq : .  (6)
+
+	.  reduce 6
+
+	stat_seq  goto 11
+
+
+state 8
+	program : PROGRAM ID SCOL decl_list block . PRD  (1)
+
+	PRD  shift 12
+	.  error
+
+
+state 9
+	decl_list : decl_list declaration . SCOL  (3)
+
+	SCOL  shift 13
+	.  error
+
+
+state 10
+	declaration : VAR ID . COL INTEGER  (4)
+
+	COL  shift 14
+	.  error
+
+
+state 11
+	block : BEGINPROG stat_seq . ENDPROG  (5)
+	stat_seq : stat_seq . statement SCOL  (7)
+
+	ENDPROG  shift 15
+	READ  shift 16
+	WRITE  shift 17
+	IF  shift 18
+	WHILE  shift 19
+	ID  shift 20
+	.  error
+
+	statement  goto 21
+
+
+state 12
+	program : PROGRAM ID SCOL decl_list block PRD .  (1)
+
+	.  reduce 1
+
+
+state 13
+	decl_list : decl_list declaration SCOL .  (3)
+
+	.  reduce 3
+
+
+state 14
+	declaration : VAR ID COL . INTEGER  (4)
+
+	INTEGER  shift 22
+	.  error
+
+
+state 15
+	block : BEGINPROG stat_seq ENDPROG .  (5)
+
+	.  reduce 5
+
+
+state 16
+	statement : READ . ID  (10)
+
+	ID  shift 23
+	.  error
+
+
+state 17
+	statement : WRITE . expression  (9)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 28
+
+
+state 18
+	statement : IF . expression THEN stat_seq ELSE stat_seq ENDIF  (11)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 29
+
+
+state 19
+	statement : WHILE . expression DO stat_seq ENDDO  (12)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 30
+
+
+state 20
+	statement : ID . ASGN expression  (8)
+
+	ASGN  shift 31
+	.  error
+
+
+state 21
+	stat_seq : stat_seq statement . SCOL  (7)
+
+	SCOL  shift 32
+	.  error
+
+
+state 22
+	declaration : VAR ID COL INTEGER .  (4)
+
+	.  reduce 4
+
+
+state 23
+	statement : READ ID .  (10)
+
+	.  reduce 10
+
+
+state 24
+	expression : INT_LITERAL .  (25)
+
+	.  reduce 25
+
+
+state 25
+	expression : LPAREN . expression RPAREN  (23)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 33
+
+
+state 26
+	expression : MINUS . expression  (24)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 34
+
+
+state 27
+	expression : ID .  (26)
+
+	.  reduce 26
+
+
+state 28
+	statement : WRITE expression .  (9)
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	LT  shift 35
+	LE  shift 36
+	EQ  shift 37
+	GE  shift 38
+	GT  shift 39
+	NE  shift 40
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	SCOL  reduce 9
+
+
+state 29
+	statement : IF expression . THEN stat_seq ELSE stat_seq ENDIF  (11)
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	THEN  shift 45
+	LT  shift 35
+	LE  shift 36
+	EQ  shift 37
+	GE  shift 38
+	GT  shift 39
+	NE  shift 40
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	.  error
+
+
+state 30
+	statement : WHILE expression . DO stat_seq ENDDO  (12)
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	DO  shift 46
+	LT  shift 35
+	LE  shift 36
+	EQ  shift 37
+	GE  shift 38
+	GT  shift 39
+	NE  shift 40
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	.  error
+
+
+state 31
+	statement : ID ASGN . expression  (8)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 47
+
+
+state 32
+	stat_seq : stat_seq statement SCOL .  (7)
+
+	.  reduce 7
+
+
+state 33
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+	expression : LPAREN expression . RPAREN  (23)
+
+	RPAREN  shift 48
+	LT  shift 35
+	LE  shift 36
+	EQ  shift 37
+	GE  shift 38
+	GT  shift 39
+	NE  shift 40
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	.  error
+
+
+state 34
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+	expression : MINUS expression .  (24)
+
+	.  reduce 24
+
+
+state 35
+	expression : expression LT . expression  (17)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 49
+
+
+state 36
+	expression : expression LE . expression  (18)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 50
+
+
+state 37
+	expression : expression EQ . expression  (19)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 51
+
+
+state 38
+	expression : expression GE . expression  (20)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 52
+
+
+state 39
+	expression : expression GT . expression  (21)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 53
+
+
+state 40
+	expression : expression NE . expression  (22)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 54
+
+
+state 41
+	expression : expression PLUS . expression  (13)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 55
+
+
+state 42
+	expression : expression MINUS . expression  (14)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 56
+
+
+state 43
+	expression : expression TIMES . expression  (15)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 57
+
+
+state 44
+	expression : expression DIV . expression  (16)
+
+	INT_LITERAL  shift 24
+	LPAREN  shift 25
+	MINUS  shift 26
+	ID  shift 27
+	.  error
+
+	expression  goto 58
+
+
+state 45
+	statement : IF expression THEN . stat_seq ELSE stat_seq ENDIF  (11)
+	stat_seq : .  (6)
+
+	.  reduce 6
+
+	stat_seq  goto 59
+
+
+state 46
+	statement : WHILE expression DO . stat_seq ENDDO  (12)
+	stat_seq : .  (6)
+
+	.  reduce 6
+
+	stat_seq  goto 60
+
+
+state 47
+	statement : ID ASGN expression .  (8)
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	LT  shift 35
+	LE  shift 36
+	EQ  shift 37
+	GE  shift 38
+	GT  shift 39
+	NE  shift 40
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	SCOL  reduce 8
+
+
+state 48
+	expression : LPAREN expression RPAREN .  (23)
+
+	.  reduce 23
+
+
+state 49
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression LT expression .  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 17
+	DO  reduce 17
+	RPAREN  reduce 17
+	SCOL  reduce 17
+	LT  reduce 17
+	LE  reduce 17
+	EQ  reduce 17
+	GE  reduce 17
+	GT  reduce 17
+	NE  reduce 17
+
+
+state 50
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression LE expression .  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 18
+	DO  reduce 18
+	RPAREN  reduce 18
+	SCOL  reduce 18
+	LT  reduce 18
+	LE  reduce 18
+	EQ  reduce 18
+	GE  reduce 18
+	GT  reduce 18
+	NE  reduce 18
+
+
+state 51
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression EQ expression .  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	LT  shift 35
+	LE  shift 36
+	GE  shift 38
+	GT  shift 39
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 19
+	DO  reduce 19
+	RPAREN  reduce 19
+	SCOL  reduce 19
+	EQ  reduce 19
+	NE  reduce 19
+
+
+state 52
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression GE expression .  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 20
+	DO  reduce 20
+	RPAREN  reduce 20
+	SCOL  reduce 20
+	LT  reduce 20
+	LE  reduce 20
+	EQ  reduce 20
+	GE  reduce 20
+	GT  reduce 20
+	NE  reduce 20
+
+
+state 53
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression GT expression .  (21)
+	expression : expression . NE expression  (22)
+
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 21
+	DO  reduce 21
+	RPAREN  reduce 21
+	SCOL  reduce 21
+	LT  reduce 21
+	LE  reduce 21
+	EQ  reduce 21
+	GE  reduce 21
+	GT  reduce 21
+	NE  reduce 21
+
+
+state 54
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+	expression : expression NE expression .  (22)
+
+	LT  shift 35
+	LE  shift 36
+	GE  shift 38
+	GT  shift 39
+	PLUS  shift 41
+	MINUS  shift 42
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 22
+	DO  reduce 22
+	RPAREN  reduce 22
+	SCOL  reduce 22
+	EQ  reduce 22
+	NE  reduce 22
+
+
+state 55
+	expression : expression . PLUS expression  (13)
+	expression : expression PLUS expression .  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 13
+	DO  reduce 13
+	RPAREN  reduce 13
+	SCOL  reduce 13
+	LT  reduce 13
+	LE  reduce 13
+	EQ  reduce 13
+	GE  reduce 13
+	GT  reduce 13
+	NE  reduce 13
+	PLUS  reduce 13
+	MINUS  reduce 13
+
+
+state 56
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression MINUS expression .  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	TIMES  shift 43
+	DIV  shift 44
+	THEN  reduce 14
+	DO  reduce 14
+	RPAREN  reduce 14
+	SCOL  reduce 14
+	LT  reduce 14
+	LE  reduce 14
+	EQ  reduce 14
+	GE  reduce 14
+	GT  reduce 14
+	NE  reduce 14
+	PLUS  reduce 14
+	MINUS  reduce 14
+
+
+state 57
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression TIMES expression .  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	.  reduce 15
+
+
+state 58
+	expression : expression . PLUS expression  (13)
+	expression : expression . MINUS expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DIV expression  (16)
+	expression : expression DIV expression .  (16)
+	expression : expression . LT expression  (17)
+	expression : expression . LE expression  (18)
+	expression : expression . EQ expression  (19)
+	expression : expression . GE expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . NE expression  (22)
+
+	.  reduce 16
+
+
+state 59
+	stat_seq : stat_seq . statement SCOL  (7)
+	statement : IF expression THEN stat_seq . ELSE stat_seq ENDIF  (11)
+
+	READ  shift 16
+	WRITE  shift 17
+	IF  shift 18
+	ELSE  shift 61
+	WHILE  shift 19
+	ID  shift 20
+	.  error
+
+	statement  goto 21
+
+
+state 60
+	stat_seq : stat_seq . statement SCOL  (7)
+	statement : WHILE expression DO stat_seq . ENDDO  (12)
+
+	READ  shift 16
+	WRITE  shift 17
+	IF  shift 18
+	WHILE  shift 19
+	ENDDO  shift 62
+	ID  shift 20
+	.  error
+
+	statement  goto 21
+
+
+state 61
+	statement : IF expression THEN stat_seq ELSE . stat_seq ENDIF  (11)
+	stat_seq : .  (6)
+
+	.  reduce 6
+
+	stat_seq  goto 63
+
+
+state 62
+	statement : WHILE expression DO stat_seq ENDDO .  (12)
+
+	.  reduce 12
+
+
+state 63
+	stat_seq : stat_seq . statement SCOL  (7)
+	statement : IF expression THEN stat_seq ELSE stat_seq . ENDIF  (11)
+
+	READ  shift 16
+	WRITE  shift 17
+	IF  shift 18
+	ENDIF  shift 64
+	WHILE  shift 19
+	ID  shift 20
+	.  error
+
+	statement  goto 21
+
+
+state 64
+	statement : IF expression THEN stat_seq ELSE stat_seq ENDIF .  (11)
+
+	.  reduce 11
+
+
+36 terminals, 8 nonterminals
+27 grammar rules, 65 states

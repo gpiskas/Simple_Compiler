@@ -1,0 +1,14 @@
+PROGRAM unary;
+VAR a: INTEGER;
+VAR b: INTEGER;
+BEGIN
+a:=2;
+b:=-5;
+
+WRITE -a;
+WRITE -a-b;
+WRITE -10;
+a:=-a;
+WRITE a;
+
+END.
